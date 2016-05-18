@@ -28,6 +28,8 @@
 from ._item_str import NodeGetter
 from ._item_str import NodeGetters
 
+from ._graph import PrintGraph
+
 from ._print import GraphLineArrangements
 from ._print import GraphLineArrangementsConfig
 from ._print import GraphLineInfo
