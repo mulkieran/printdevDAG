@@ -31,18 +31,11 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-import itertools
-import os
 
 from collections import defaultdict
 
-import networkx
-
-from pydevDAG import ElementTypes
-
 from . import _item_str
 from . import _print
-from . import _utils
 
 
 class PrintGraph(object):
