@@ -18,8 +18,8 @@
 # Red Hat Author(s): Anne Mulhern <amulhern@redhat.com>
 
 """
-    pydevDAG._print._graph
-    ======================
+    printdevDAG._print._graph
+    =========================
 
     Textual display of graph.
 
@@ -31,7 +31,7 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-from pydevDAG._utils import GraphUtils
+import pydevDAG
 
 from printdevDAG._utils import GeneralUtils
 
@@ -61,6 +61,7 @@ class GraphLineArrangements(object):
     """
     Sort out nodes and their relationship to each other in printing.
     """
+    # pylint: disable=too-few-public-methods
 
     @classmethod
     def node_strings_from_graph(cls, config, graph):
@@ -80,111 +81,25 @@ class GraphLineArrangements(object):
         * node - the table of information about the node itself
         * orphan - whether this node has no parents
         """
-        roots = sorted(
-           GraphUtils.get_roots(graph),
-           key=GeneralUtils.str_key_func_gen(
+        nodes = pydevDAG.DepthFirst.nodes(
+           graph,
+           key_func=GeneralUtils.str_key_func_gen(
               lambda n: config.info_func(n, [config.sort_key])[config.sort_key]
            )
         )
 
-        def node_func(node):
-            """
-            A function that returns the line arrangements for a root node.
-            """
-            return cls.node_strings_from_root(
-               config,
-               graph,
-               node
-            )
-
-        return [l for root in roots for l in node_func(root)]
-
-    @classmethod
-    def node_strings_from_root(cls, config, graph, node):
-        """
-        Generates print information about nodes reachable from
-        ``node`` including itself. Assumes that the node is a root and
-        supplies some appropriate defaults.
-
-        :param LineArrangementsConfig: config
-        :param `DiGraph` graph: the graph
-        :param `Node` node: the node to print
-
-        :returns: a table of information to be used for further display
-        :rtype: dict of str * object
-
-        Fields in table:
-        * indent - the level of indentation
-        * last - whether this node is the last child of its parent
-        * node - the table of information about the node itself
-        * orphan - whether this node has no parents
-        """
-        return cls.node_strings(
-           config,
-           graph,
-           True,
-           True,
-           0,
-           node
-        )
-
-    @classmethod
-    def node_strings(
-       cls,
-       config,
-       graph,
-       orphan,
-       last,
-       indent,
-       node
-    ):
-        """
-        Generates print information about nodes reachable from
-        ``node`` including itself.
-
-        :param LineArrangementsConfig: config
-        :param `DiGraph` graph: the graph
-        :param bool orphan: True if this node has no parents, otherwise False
-        :param bool last: True if this node is the last child, otherwise False
-        :param int indent: the indentation level
-        :param `Node` node: the node to print
-
-        :returns: a table of information to be used for further display
-        :rtype: dict of str * object
-
-        Fields in table:
-        * indent - the level of indentation
-        * last - whether this node is the last child of its parent
-        * node - the table of information about the node itself
-        * orphan - whether this node has no parents
-        """
-        # pylint: disable=too-many-arguments
-        yield {
-           'indent' : indent,
-           'last' : last,
-           'node' : config.info_func(node, keys=None, conv=config.conversion_func),
-           'orphan' : orphan,
-        }
-
-
-        successors = sorted(
-           graph.successors(node),
-           key=GeneralUtils.str_key_func_gen(
-              lambda x: config.info_func(x, [config.sort_key])[config.sort_key]
-           )
-        )
-
-        for succ in successors:
-            lines = cls.node_strings(
-               config,
-               graph,
-               False,
-               succ is successors[-1],
-               indent if orphan else indent + 1,
-               succ
-            )
-            for line in lines:
-                yield line
+        for (depth, node, last) in nodes:
+            yield {
+               'indent' : depth,
+               'last' : last,
+               'node' :
+                  config.info_func(
+                     node,
+                     keys=None,
+                     conv=config.conversion_func
+                  ),
+               'orphan' : depth == 0
+            }
 
 
 class GraphXformLines(object):

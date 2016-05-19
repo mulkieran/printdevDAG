@@ -87,7 +87,7 @@ class PrintGraph(object):
            }
         )
 
-        lines = _print.GraphLineArrangements.node_strings_from_graph(
+        infos = _print.GraphLineArrangements.node_strings_from_graph(
            _print.GraphLineArrangementsConfig(
               line_info.info,
               lambda k, v: str(v),
@@ -96,7 +96,7 @@ class PrintGraph(object):
            graph
         )
 
-        lines = list(_print.GraphXformLines.xform(line_info.keys, lines))
+        lines = list(_print.GraphXformLines.xform(line_info.keys, infos))
         lines = _print.Print.lines( # pylint: disable=redefined-variable-type
            line_info.keys,
            lines,

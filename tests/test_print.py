@@ -63,31 +63,4 @@ class TestGraphPrint(object):
            ),
            GRAPH
         )
-        lines = list(lines)
-        assert len(lines) >= len(GRAPH)
-
-        node = max(GRAPH.nodes(), key=GRAPH.out_degree)
-
-        # pylint: disable=redefined-variable-type
-        lines = printdevDAG.GraphLineArrangements.node_strings_from_root(
-           printdevDAG.GraphLineArrangementsConfig(
-              line_info.info,
-              lambda k, v: str(v),
-              'NAME'
-           ),
-           GRAPH,
-           node
-        )
-        lines = list(lines)
-        assert len(lines) >= GRAPH.out_degree(node)
-
-        xformed = printdevDAG.GraphXformLines.xform(line_info.keys, lines)
-        assert len(list(xformed)) == len(lines)
-
-        final = printdevDAG.Print.lines(
-           line_info.keys,
-           xformed,
-           2,
-           line_info.alignment
-        )
-        assert len(list(final)) >= len(list(xformed))
+        assert len(list(lines)) >= len(GRAPH)
