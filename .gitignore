@@ -23,7 +23,7 @@ printdevDAG.egg-info
 
 # sphinx
 doc/_build
-doc/pydevDAG
+doc/printdevDAG
 doc/tests
 
 # vim
