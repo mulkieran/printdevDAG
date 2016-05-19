@@ -133,7 +133,8 @@ class GraphXformLines(object):
         """
         edge_string = "" if line_info['orphan'] else \
            (cls._LAST_STR if line_info['last'] else cls._EDGE_STR)
-        return " " * (line_info['indent'] * cls.indentation()) + edge_string
+        return " " * ((line_info['indent'] - 1)* cls.indentation()) + \
+           edge_string
 
     @classmethod
     def xform(cls, column_headers, lines):
