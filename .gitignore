@@ -16,7 +16,7 @@ htmlcov
 .tox
 
 # distutils
-pydevDAG.egg-info
+printdevDAG.egg-info
 
 # hypothesis
 .hypothesis
