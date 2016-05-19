@@ -75,7 +75,6 @@ class GraphLineArrangements(object):
         :rtype: list of dict of str * object
 
         Fields in table:
-        * diffstatus - the diffstatus of the edge to this node
         * indent - the level of indentation
         * last - whether this node is the last child of its parent
         * node - the table of information about the node itself
@@ -115,7 +114,6 @@ class GraphLineArrangements(object):
         :rtype: dict of str * object
 
         Fields in table:
-        * diffstatus - the diffstatus of the edge to this node
         * indent - the level of indentation
         * last - whether this node is the last child of its parent
         * node - the table of information about the node itself
@@ -126,7 +124,6 @@ class GraphLineArrangements(object):
            graph,
            True,
            True,
-           None,
            0,
            node
         )
@@ -138,7 +135,6 @@ class GraphLineArrangements(object):
        graph,
        orphan,
        last,
-       diffstatus,
        indent,
        node
     ):
@@ -150,7 +146,6 @@ class GraphLineArrangements(object):
         :param `DiGraph` graph: the graph
         :param bool orphan: True if this node has no parents, otherwise False
         :param bool last: True if this node is the last child, otherwise False
-        :param `DiffStatus` diffstatus: the diffstatus of the edge
         :param int indent: the indentation level
         :param `Node` node: the node to print
 
@@ -158,7 +153,6 @@ class GraphLineArrangements(object):
         :rtype: dict of str * object
 
         Fields in table:
-        * diffstatus - the diffstatus of the edge to this node
         * indent - the level of indentation
         * last - whether this node is the last child of its parent
         * node - the table of information about the node itself
@@ -166,7 +160,6 @@ class GraphLineArrangements(object):
         """
         # pylint: disable=too-many-arguments
         yield {
-           'diffstatus' : diffstatus,
            'indent' : indent,
            'last' : last,
            'node' : config.info_func(node, keys=None, conv=config.conversion_func),
@@ -187,7 +180,6 @@ class GraphLineArrangements(object):
                graph,
                False,
                succ is successors[-1],
-               graph[node][succ].get('diffstatus'),
                indent if orphan else indent + 1,
                succ
             )
