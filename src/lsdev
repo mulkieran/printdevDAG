@@ -38,6 +38,15 @@ import pydevDAG
 import printdevDAG
 
 _ACTIONS = ['print', 'write']
+_TYPES = ['depth_first', 'breadth_first']
+
+def extend_print_parser(parser):
+    parser.add_argument(
+       '--traversal',
+       choices=_TYPES,
+       default='depth_first',
+       help='type of traversal to do on the graph'
+    )
 
 def get_parser():
     """
@@ -47,12 +56,14 @@ def get_parser():
     :rtype: `ArgumentParser`
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-       "--action",
-       choices=_ACTIONS,
-       default="print",
-       help="action to perform"
-    )
+
+    subparsers = parser.add_subparsers(dest='subparser_name')
+
+    write_parser = subparsers.add_parser('write')
+
+    print_parser = subparsers.add_parser('print')
+    extend_print_parser(print_parser)
+
     parser.add_argument(
        "--inverse",
        action="store_true",
@@ -75,7 +86,7 @@ def get_parser():
     )
     return parser
 
-def do_action(graph, action, out):
+def do_action(graph, args, out):
     """
     Do the action.
 
@@ -83,11 +94,11 @@ def do_action(graph, action, out):
     :param str action: the action to perform
     :param file out: output stream for results
     """
-    assert action in _ACTIONS
+    assert args.subparser_name in _ACTIONS
 
-    if action == "print":
-        printdevDAG.PrintGraph.print_graph(out, graph)
-    elif action == "write":
+    if args.subparser_name == "print":
+        printdevDAG.PrintGraph.print_graph(out, graph, args.traversal)
+    elif args.subparser_name == "write":
         pydevDAG.Writer.write(graph, out)
     else:
         assert False
@@ -118,10 +129,10 @@ def main():
     )
 
     if not args.filename:
-        do_action(graph, args.action, sys.stdout)
+        do_action(graph, args, sys.stdout)
     else:
         with open(args.filename, "w") as out:
-            do_action(graph, args.action, out)
+            do_action(graph, args, out)
 
     return 0
 

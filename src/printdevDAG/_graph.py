@@ -34,6 +34,7 @@ from __future__ import unicode_literals
 
 from collections import defaultdict
 
+from . import _breadth
 from . import _depth
 from . import _item_str
 from . import _print
@@ -118,15 +119,49 @@ class PrintGraph(object):
            line_info.alignment
         )
 
+    @staticmethod
+    def breadth_first(graph, line_info):
+        """
+        Yield data for a breadth first search
+        """
+        infos = _breadth.GraphLineArrangements.node_strings_from_graph(
+           _breadth.GraphLineArrangementsConfig(
+              line_info.info,
+              lambda k, v: str(v),
+              'NAME'
+           ),
+           graph
+        )
+
+        for (level, items) in infos:
+            yield ""
+            yield "Level: %s" % level
+            lines = _print.Print.lines(
+              line_info.keys,
+              items,
+              2,
+              line_info.alignment
+            )
+            for line in lines:
+                yield line
+
     @classmethod
-    def print_graph(cls, out, graph):
+    def print_graph(cls, out, graph, traversal):
         """
         Print a graph.
 
         :param `file` out: print destination
         :param `DiGraph` graph: the graph
+        :param str traversal: the type of graph to print
         """
         line_info = cls.line_info(graph)
 
-        for line in cls.depth_first(graph, line_info):
+        if traversal == 'depth_first':
+            func = cls.depth_first
+        elif traversal == 'breadth_first':
+            func = cls.breadth_first
+        else:
+            assert False
+
+        for line in func(graph, line_info):
             print(line, end="\n", file=out)
