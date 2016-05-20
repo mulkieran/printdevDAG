@@ -97,10 +97,10 @@ class PrintGraph(object):
            graph
         )
 
-        lines = list(_depth.GraphXformLines.xform(line_info.keys, infos))
-        lines = _print.Print.lines( # pylint: disable=redefined-variable-type
+        items = list(_depth.GraphXformLines.xform(line_info.keys, infos))
+        lines = _print.Print.lines(
            line_info.keys,
-           lines,
+           items,
            2,
            line_info.alignment
         )
