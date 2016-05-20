@@ -34,6 +34,7 @@ from __future__ import unicode_literals
 
 from collections import defaultdict
 
+from . import _depth
 from . import _item_str
 from . import _print
 
@@ -87,8 +88,8 @@ class PrintGraph(object):
            }
         )
 
-        infos = _print.GraphLineArrangements.node_strings_from_graph(
-           _print.GraphLineArrangementsConfig(
+        infos = _depth.GraphLineArrangements.node_strings_from_graph(
+           _depth.GraphLineArrangementsConfig(
               line_info.info,
               lambda k, v: str(v),
               'NAME'
@@ -96,7 +97,7 @@ class PrintGraph(object):
            graph
         )
 
-        lines = list(_print.GraphXformLines.xform(line_info.keys, infos))
+        lines = list(_depth.GraphXformLines.xform(line_info.keys, infos))
         lines = _print.Print.lines( # pylint: disable=redefined-variable-type
            line_info.keys,
            lines,

@@ -30,9 +30,10 @@ from ._item_str import NodeGetters
 
 from ._graph import PrintGraph
 
-from ._print import GraphLineArrangements
-from ._print import GraphLineArrangementsConfig
+from ._depth import GraphLineArrangements
+from ._depth import GraphLineArrangementsConfig
+from ._depth import GraphXformLines
+
 from ._print import GraphLineInfo
-from ._print import GraphXformLines
 
 from ._print import Print

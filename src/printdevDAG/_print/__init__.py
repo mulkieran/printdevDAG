@@ -25,9 +25,6 @@
 
     .. moduleauthor::  Anne Mulhern  <amulhern@redhat.com>
 """
-from ._graph import GraphLineArrangements
-from ._graph import GraphLineArrangementsConfig
 from ._graph import GraphLineInfo
-from ._graph import GraphXformLines
 
 from ._print import Print
