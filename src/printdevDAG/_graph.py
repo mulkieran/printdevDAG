@@ -46,12 +46,14 @@ class PrintGraph(object):
     # pylint: disable=too-few-public-methods
 
     @staticmethod
-    def print_graph(out, graph):
+    def line_info(graph):
         """
-        Print a graph.
+        Get a line info object.
 
-        :param `file` out: print destination
-        :param `DiGraph` graph: the graph
+        :param DiGraph graph: the graph
+
+        :returns: a line info object
+        :rtype: GraphLineInfo
         """
         justification = defaultdict(lambda: '<')
         justification['SIZE'] = '>'
@@ -65,7 +67,7 @@ class PrintGraph(object):
            _item_str.NodeGetters.IDSASPATH,
            _item_str.NodeGetters.IDPATH
         ]
-        line_info = _print.GraphLineInfo(
+        return _print.GraphLineInfo(
            graph,
            [
               'NAME',
@@ -88,6 +90,17 @@ class PrintGraph(object):
            }
         )
 
+    @staticmethod
+    def depth_first(graph, line_info):
+        """
+        Yield lines for depth first output.
+
+        :param DiGraph graph: the graph
+        :param GraphLineInfo line_info: the line info object
+
+        :returns: generates lines as str
+        :rtype: a generator of str
+        """
         infos = _depth.GraphLineArrangements.node_strings_from_graph(
            _depth.GraphLineArrangementsConfig(
               line_info.info,
@@ -98,11 +111,22 @@ class PrintGraph(object):
         )
 
         items = list(_depth.GraphXformLines.xform(line_info.keys, infos))
-        lines = _print.Print.lines(
+        return _print.Print.lines(
            line_info.keys,
            items,
            2,
            line_info.alignment
         )
-        for line in lines:
+
+    @classmethod
+    def print_graph(cls, out, graph):
+        """
+        Print a graph.
+
+        :param `file` out: print destination
+        :param `DiGraph` graph: the graph
+        """
+        line_info = cls.line_info(graph)
+
+        for line in cls.depth_first(graph, line_info):
             print(line, end="\n", file=out)
