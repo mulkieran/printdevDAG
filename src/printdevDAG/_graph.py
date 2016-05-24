@@ -72,6 +72,7 @@ class PrintGraph(object):
            graph,
            [
               'NAME',
+              'NODETYPE',
               'DEVNAME',
               'SUBSYSTEM',
               'DEVTYPE',
@@ -82,6 +83,7 @@ class PrintGraph(object):
            justification,
            {
               'NAME' : name_funcs,
+              'NODETYPE' : [_item_str.NodeGetters.NODETYPE],
               'DEVNAME' : [_item_str.NodeGetters.DEVNAME],
               'DEVTYPE': [_item_str.NodeGetters.DEVTYPE],
               'DM_SUBSYSTEM' : [_item_str.NodeGetters.DMUUIDSUBSYSTEM],

@@ -39,6 +39,8 @@ import justbytes
 
 import parseudev
 
+from pydevDAG import NodeTypes
+
 from pydevDAG._errors import DAGValueError
 from pydevDAG._utils import Dict
 
@@ -194,6 +196,23 @@ class IdSasPath(NodeGetter):
             return None
 
 
+class NodeType(NodeGetter):
+    """
+    Get the type of the node.
+    """
+    # pylint: disable=too-few-public-methods
+
+    @staticmethod
+    def getter(node):
+        nodetype = node['nodetype']
+        if nodetype == NodeTypes.WWN:
+            return "Drive"
+        elif nodetype == NodeTypes.DEVICE_PATH:
+            return 'Device'
+        else:
+            return None
+
+
 class Size(NodeGetter):
     """
     Get a size for a node.
@@ -257,6 +276,7 @@ class NodeGetters(object):
     IDENTIFIER = Identifier
     IDPATH = IdPath
     IDSASPATH = IdSasPath
+    NODETYPE = NodeType
     SIZE = Size
     SUBSYSTEM = Subsystem
     SYSNAME = Sysname
