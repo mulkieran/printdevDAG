@@ -219,8 +219,6 @@ class Size(NodeGetter):
     """
     # pylint: disable=too-few-public-methods
 
-    map_requires = ['SYSFS']
-
     @staticmethod
     def getter(node):
         try:
