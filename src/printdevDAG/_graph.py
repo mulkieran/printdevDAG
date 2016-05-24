@@ -37,6 +37,7 @@ import pydevDAG
 
 from . import _breadth
 from . import _depth
+from . import _layers
 from . import _print
 
 
@@ -122,6 +123,54 @@ class PrintGraph(object):
         )
 
     @staticmethod
+    def layers(graph, line_info):
+        """
+        Yield data for a layered view of the storage stack.
+
+        :param DiGraph graph: the graph
+        :param GraphLineInfo line_info: the line info object
+        """
+        infos = _layers.GraphLineArrangements.node_strings_from_graph(
+           _layers.GraphLineArrangementsConfig(
+              line_info.info,
+              lambda k, v: str(v),
+              'NAME'
+           ),
+           graph
+        )
+
+        for ((node_type, dev_type, dm_subsystem), items) in infos:
+            yield ""
+
+            fmt_str = "".join([
+               '%(dm)s',
+               '%(dm_space)s',
+               '%(devtype)s',
+               '%(devtype_space)s',
+               '%(nodetype)s',
+               's'
+            ])
+
+            value = {
+               'dm' : dm_subsystem if dm_subsystem is not None else '',
+               'dm_space' : ' ' if dm_subsystem is not None else '',
+               'devtype' : dev_type if dev_type is not None else '',
+               'devtype_space' : ' ' if dev_type is not None else '',
+               'nodetype' : node_type
+            }
+
+            yield fmt_str % value
+
+            lines = _print.Print.lines(
+              line_info.keys,
+              items,
+              2,
+              line_info.alignment
+            )
+            for line in lines:
+                yield line
+
+    @staticmethod
     def breadth_first(graph, line_info):
         """
         Yield data for a breadth first search
@@ -162,6 +211,8 @@ class PrintGraph(object):
             func = cls.depth_first
         elif traversal == 'breadth_first':
             func = cls.breadth_first
+        elif traversal == 'layers':
+            func = cls.layers
         else:
             assert False
 

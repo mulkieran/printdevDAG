@@ -38,7 +38,7 @@ import pydevDAG
 import printdevDAG
 
 _ACTIONS = ['print', 'write']
-_TYPES = ['depth_first', 'breadth_first']
+_TYPES = ['breadth_first', 'depth_first', 'layers']
 
 def extend_print_parser(parser):
     parser.add_argument(
