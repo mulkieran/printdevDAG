@@ -25,8 +25,6 @@
 
     .. moduleauthor::  Anne Mulhern  <amulhern@redhat.com>
 """
-from ._item_str import NodeGetter
-from ._item_str import NodeGetters
 
 from ._graph import PrintGraph
 

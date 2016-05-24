@@ -31,12 +31,12 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
-
 from collections import defaultdict
+
+import pydevDAG
 
 from . import _breadth
 from . import _depth
-from . import _item_str
 from . import _print
 
 
@@ -59,14 +59,14 @@ class PrintGraph(object):
         justification = defaultdict(lambda: '<')
         justification['SIZE'] = '>'
         name_funcs = [
-           _item_str.NodeGetters.DMNAME,
-           _item_str.NodeGetters.DEVNAME,
-           _item_str.NodeGetters.SYSNAME,
-           _item_str.NodeGetters.IDENTIFIER
+           pydevDAG.NodeGetters.DMNAME,
+           pydevDAG.NodeGetters.DEVNAME,
+           pydevDAG.NodeGetters.SYSNAME,
+           pydevDAG.NodeGetters.IDENTIFIER
         ]
         path_funcs = [
-           _item_str.NodeGetters.IDSASPATH,
-           _item_str.NodeGetters.IDPATH
+           pydevDAG.NodeGetters.IDSASPATH,
+           pydevDAG.NodeGetters.IDPATH
         ]
         return _print.GraphLineInfo(
            graph,
@@ -83,13 +83,13 @@ class PrintGraph(object):
            justification,
            {
               'NAME' : name_funcs,
-              'NODETYPE' : [_item_str.NodeGetters.NODETYPE],
-              'DEVNAME' : [_item_str.NodeGetters.DEVNAME],
-              'DEVTYPE': [_item_str.NodeGetters.DEVTYPE],
-              'DM_SUBSYSTEM' : [_item_str.NodeGetters.DMUUIDSUBSYSTEM],
+              'NODETYPE' : [pydevDAG.NodeGetters.NODETYPE],
+              'DEVNAME' : [pydevDAG.NodeGetters.DEVNAME],
+              'DEVTYPE': [pydevDAG.NodeGetters.DEVTYPE],
+              'DM_SUBSYSTEM' : [pydevDAG.NodeGetters.DMUUIDSUBSYSTEM],
               'ID_PATH' : path_funcs,
-              'SIZE': [_item_str.NodeGetters.SIZE],
-              'SUBSYSTEM': [_item_str.NodeGetters.SUBSYSTEM]
+              'SIZE': [pydevDAG.NodeGetters.SIZE],
+              'SUBSYSTEM': [pydevDAG.NodeGetters.SUBSYSTEM]
            }
         )
 

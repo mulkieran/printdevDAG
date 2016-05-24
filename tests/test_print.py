@@ -34,6 +34,8 @@ from __future__ import unicode_literals
 
 from collections import defaultdict
 
+import pydevDAG
+
 import printdevDAG
 
 from ._constants import GRAPH
@@ -53,7 +55,7 @@ class TestGraphPrint(object):
            GRAPH,
            ['NAME'],
            defaultdict(lambda: '<'),
-           {'NAME' : [printdevDAG.NodeGetters.DEVNAME]}
+           {'NAME' : [pydevDAG.NodeGetters.DEVNAME]}
         )
         lines = printdevDAG.GraphLineArrangements.node_strings_from_graph(
            printdevDAG.GraphLineArrangementsConfig(
