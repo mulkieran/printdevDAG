@@ -58,7 +58,7 @@ setuptools.setup(
     install_requires = [
         'justbytes>0.08',
         'parseudev>=0.6.0',
-        'pydevDAG>=0.6',
+        'pydevDAG>=0.7',
         'six'
     ],
     package_dir={"": "src"},

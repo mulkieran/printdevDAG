@@ -79,6 +79,7 @@ class PrintGraph(object):
               'DEVTYPE',
               'DM_SUBSYSTEM',
               'ID_PATH',
+              'MAJOR',
               'SIZE'
            ],
            justification,
@@ -89,6 +90,7 @@ class PrintGraph(object):
               'DEVTYPE': [pydevDAG.NodeGetters.DEVTYPE],
               'DM_SUBSYSTEM' : [pydevDAG.NodeGetters.DMUUIDSUBSYSTEM],
               'ID_PATH' : path_funcs,
+              'MAJOR': [pydevDAG.NodeGetters.MAJOR],
               'SIZE': [pydevDAG.NodeGetters.SIZE],
               'SUBSYSTEM': [pydevDAG.NodeGetters.SUBSYSTEM]
            }
