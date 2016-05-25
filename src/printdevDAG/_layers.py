@@ -102,7 +102,8 @@ class GraphLineArrangements(object):
             return (
                pydevDAG.NodeGetters.NODETYPE.getter(attrs),
                pydevDAG.NodeGetters.DEVTYPE.getter(attrs),
-               pydevDAG.NodeGetters.DMUUIDSUBSYSTEM.getter(attrs)
+               pydevDAG.NodeGetters.DMUUIDSUBSYSTEM.getter(attrs),
+               pydevDAG.NodeGetters.MAJOR.getter(attrs)
             )
 
         for (_, level_nodes) in levels:

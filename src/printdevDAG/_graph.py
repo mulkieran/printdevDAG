@@ -141,7 +141,7 @@ class PrintGraph(object):
            graph
         )
 
-        for ((node_type, dev_type, dm_subsystem), items) in infos:
+        for ((node_type, dev_type, dm_subsystem, major_number), items) in infos:
             yield ""
 
             fmt_str = "".join([
